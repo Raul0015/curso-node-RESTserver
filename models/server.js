@@ -7,7 +7,7 @@ class Server{
     // Properties
     constructor(){
         this.app = express(); // Create express app like a propertie of the class
-        this.port = process.env.PORT
+        this.port = process.env.PORT || 3000;
         this.userPath = '/api/users';
 
         // Middlewares
