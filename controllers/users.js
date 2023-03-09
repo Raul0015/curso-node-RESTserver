@@ -39,6 +39,16 @@ const getUsers = async(req = request, res = response) => {
     })
 };
 
+const getUserById = async(req, res = response) =>{
+    const {id} = req.params;
+
+    const usuario = await Usuario.findById(id)
+
+    res.json({
+        usuario
+    });
+};
+
 const putUser = async (req, res = response) => {
 
     const { id }= req.params;
@@ -117,6 +127,7 @@ const patchUser = (req, res = response) => {
 
 module.exports = {
     getUsers,
+    getUserById,
     putUser,
     postUser,
     deleteUser,

@@ -6,6 +6,7 @@ const router = Router();
 const { validateRole, validateEmail, existeUsuario } = require('../helpers/db-validators');
 
 const {getUsers,
+       getUserById,
        putUser,
        postUser,
        deleteUser,
@@ -16,6 +17,12 @@ const { validarCampos } = require('../middlewares/validar-campos');
 
 
 router.get('/', getUsers);
+
+router.get('/:id', [
+       check('id', 'No es un ID validio').isMongoId(),
+       check('id').custom(existeUsuario),
+       validarCampos
+],getUserById);
 
 // Update informatio
 router.put('/:id', [
