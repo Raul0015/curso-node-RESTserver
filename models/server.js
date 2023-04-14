@@ -9,7 +9,11 @@ class Server{
     constructor(){
         this.app = express(); // Create express app like a propertie of the class
         this.port = process.env.PORT
+
+
         this.userPath = '/api/users';
+        // Rura para autenticación
+        this.authPath = '/api/auth';
 
         // Conectar a base de datos
         this.conectarDB();
@@ -39,6 +43,7 @@ class Server{
     }
 
     routes() {
+        this.app.use(this.authPath, require('../routes/auth'))
         this.app.use(this.userPath, require('../routes/users'));
     }
 

@@ -13,8 +13,15 @@ const {getUsers,
        patchUser} = require('../controllers/users');
 
        
-const { validarCampos } = require('../middlewares/validar-campos');
-
+// const { validarCampos } = require('../middlewares/validar-campos');
+// const { validarJWT } = require('../middlewares/validar-jwt');
+// const { esAdminRole, tieneRol } = require('../middlewares/validar-roles');
+const {
+       validarCampos,
+       validarJWT,
+       esAdminRole,
+       tieneRol
+} = require('../middlewares') // Podemos poner ../middlewares/index pero esta de más 
 
 router.get('/', getUsers);
 
@@ -45,6 +52,9 @@ router.post('/', [
 
 // Delete something
 router.delete('/:id', [
+       validarJWT, // Validate JWT
+       // esAdminRole, // Ver si tiene rol de ADMIN solo puede ser admin
+       tieneRol('ADMIN_ROLE', 'VENTAS_ROLE'),
        check('id', 'No es un ID valido').isMongoId(),
        check('id').custom(existeUsuario),
        validarCampos
