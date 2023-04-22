@@ -60,6 +60,7 @@ const googleSignIn = async(req = request, res = response) => {
         // Ver si el correo ya esta en la base
         let usuario = await Usuario.findOne({correo});
 
+        // Si el usuario no existe
         if(!usuario){
             // Tengo que crearlo
             const data = {
