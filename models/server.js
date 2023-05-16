@@ -10,10 +10,14 @@ class Server{
         this.app = express(); // Create express app like a propertie of the class
         this.port = process.env.PORT
 
-
-        this.userPath = '/api/users';
-        // Rura para autenticación
-        this.authPath = '/api/auth';
+        // Rutas
+        this.paths = {
+            auth: '/api/auth', // Ruta auth
+            user: '/api/users', // Ruta user
+            categorias: '/api/categorias', // Ruta categorias
+            productos: '/api/productos', // Ruta productos
+            buscar: '/api/buscar'
+        }
 
         // Conectar a base de datos
         this.conectarDB();
@@ -43,8 +47,11 @@ class Server{
     }
 
     routes() {
-        this.app.use(this.authPath, require('../routes/auth'))
-        this.app.use(this.userPath, require('../routes/users'));
+        this.app.use(this.paths.auth, require('../routes/auth'));
+        this.app.use(this.paths.user, require('../routes/users'));
+        this.app.use(this.paths.categorias, require('../routes/categorias'));
+        this.app.use(this.paths.productos, require('../routes/productos'));
+        this.app.use(this.paths.buscar, require('../routes/buscar'));
     }
 
     listen() {
