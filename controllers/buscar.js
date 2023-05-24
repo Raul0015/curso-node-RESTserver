@@ -58,7 +58,9 @@ const buscarProducto = async(termino = '', res = response) => {
     const esMongoID = ObjectId.isValid(termino); // True si es un mongo id
 
     if (esMongoID){ // Si el termino es un id de mongo
-        const producto = await Producto.findById(termino);
+        const producto = await Producto.findById(termino)
+            .populate('categoria', 'nombre')
+            .populate('usuario', 'nombre');
         return res.json({
             results: (producto) ? [producto] : [] // Si el usuario existe mando un arreglo con el  usuario, sino mando un arreglo vacio (usamos el terminario para evitar un NULL en caso de error)
         })
@@ -68,7 +70,9 @@ const buscarProducto = async(termino = '', res = response) => {
     const regexp = new RegExp(termino, 'i');
 
 
-    const productos = await Producto.find({nombre: regexp, estado: true});
+    const productos = await Producto.find({nombre: regexp, estado: true})
+    .populate('categoria', 'nombre')
+    .populate('usuario', 'nombre');
     res.json({
         results: productos
     })
